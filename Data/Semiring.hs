@@ -4,10 +4,10 @@ module Data.Semiring
   ( Semiring(..)
   ) where
 
-import           Control.Applicative (Applicative(..))
+import           Control.Applicative (Applicative(..), Const(..))
 import           Data.Bool (Bool(..), (||), (&&))
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
-import           Data.Ord (Ordering)
+--import           Data.Ord (Ordering)
 import           Data.Maybe
 import           Data.Monoid
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
@@ -224,17 +224,17 @@ instance Semiring a => Semiring (Endo a) where
   one = Endo (\_ -> one)
   times (Endo f) (Endo g) = Endo (f `times` g)
 
-instance Semiring All where
-  zero = All True
-  All x `plus` All y = All (x && y)
-  one = All False
-  All x `times` All y = All (x || y)
-
-instance Semiring Any where
-  zero = Any False
-  Any x `plus` Any y = Any (x || y)
-  one = Any True
-  Any x `times` Any y = Any (x && y)
+--instance Semiring All where
+--  zero = All True
+--  All x `plus` All y = All (x && y)
+--  one = All False
+--  All x `times` All y = All (x || y)
+--
+--instance Semiring Any where
+--  zero = Any False
+--  Any x `plus` Any y = Any (x || y)
+--  one = Any True
+--  Any x `times` Any y = Any (x && y)
 
 --instance Semiring a => Semiring (Sum a) where
 --instance Semiring a => Semiring (Product a) where
@@ -251,4 +251,12 @@ instance (Applicative f, Semiring a) => Semiring (Alt f a) where
   zero  = Alt (pure zero)
   one   = Alt (pure one)
   plus  = liftA2 plus
-  times = liftA2 times 
+  times = liftA2 times
+
+instance Semiring a => Semiring (Const a b) where
+  zero = Const zero
+  one  = Const one
+  plus (Const x) (Const y) = Const (x `plus` y)
+  times (Const x) (Const y) = Const (x `times` y)
+  --plus = Const (one `plus` one)
+  --times = Const (
