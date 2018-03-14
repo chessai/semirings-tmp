@@ -5,17 +5,17 @@ Haskellers are usually familiar with monoids and semigroups. A monoid has an app
 
 A Semiring has two appending operations, 'plus' and 'times', and two respective identity elements, 'zero' and 'one'.
 
-More formally, A semiring <i>R</i> is a set equipped with two binary relations 'plus' and 'times', such that:
+More formally, A semiring <i>R</i> is a set equipped with two binary relations + and *, such that:
 
-- (R, plus) is a commutative monoid with identity element zero:
-  - (a `plus` b) `plus` c = a `plus` (b `plus` c)
-  - zero `plus` a = a `plus` zero = a
-  - a `plus` b = b `plus` a
-- (R, times) is a monoid with identity element one:
-  - (a `times` b) `times` c = a `times` (b `times` c)
-  - one `times a = a `times` one = a
+- (R, plus) is a commutative monoid with identity element 0:
+  - (a + b) + c = a + (b + c)
+  - 0 + a = a + 0 = a
+  - a + b = b + a
+- (R, times) is a monoid with identity element 1:
+  - (a * b) * c = a * (b * c)
+  - 1 `times a = a * 1 = a
 - Multiplication (application of 'times') left and right distributes over Addition (application of 'plus')
-  - a `times` (b `plus` c) = (a `times` b) + (a `times` c)
-  - (a `plus` b) `times` c = (a `times` c) + (b `times` c)
-- Multiplication by 'zero' annihilates R:
-  - zero `times` a = a `times` zero = zero
+  - a * (b + c) = (a * b) + (a * c)
+  - (a + b) * c = (a * c) + (b * c)
+- Multiplication by '0' annihilates R:
+  - 0 * a = a * 0 = 0
