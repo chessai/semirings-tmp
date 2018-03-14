@@ -2,6 +2,8 @@
 
 module Data.Semiring 
   ( Semiring(..)
+  , (+++)
+  , (***)
   ) where
 
 import           Control.Applicative (Applicative(..), Const(..))
@@ -14,6 +16,10 @@ import           Data.Word (Word, Word8, Word16, Word32, Word64)
 import qualified Prelude as P
 import           Prelude (Double, Float)
 import           Prelude (IO)
+
+(+++), (***) :: Semiring a => a -> a -> a
+(+++) = plus
+(***) = times
 
 class Semiring a where
   {-# MINIMAL plus, zero, times, one #-}
@@ -225,27 +231,12 @@ instance Semiring a => Semiring (Endo a) where
   times (Endo f) (Endo g) = Endo (f `times` g)
 
 --instance Semiring All where
---  zero = All True
---  All x `plus` All y = All (x && y)
---  one = All False
---  All x `times` All y = All (x || y)
---
 --instance Semiring Any where
---  zero = Any False
---  Any x `plus` Any y = Any (x || y)
---  one = Any True
---  Any x `times` Any y = Any (x && y)
-
 --instance Semiring a => Semiring (Sum a) where
 --instance Semiring a => Semiring (Product a) where
 
 --instance Semiring a => Semiring (First a) where
 --instance Semiring a => Semiring (Last  a) where
---
-
---Category p => Monoid Endo p a
---mempty = id
---mappend = .
 
 instance (Applicative f, Semiring a) => Semiring (Alt f a) where
   zero  = Alt (pure zero)
@@ -256,7 +247,5 @@ instance (Applicative f, Semiring a) => Semiring (Alt f a) where
 instance Semiring a => Semiring (Const a b) where
   zero = Const zero
   one  = Const one
-  plus (Const x) (Const y) = Const (x `plus` y)
+  plus  (Const x) (Const y) = Const (x `plus`  y)
   times (Const x) (Const y) = Const (x `times` y)
-  --plus = Const (one `plus` one)
-  --times = Const (
