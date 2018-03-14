@@ -13,7 +13,7 @@ More formally, A semiring <i>R</i> is a set equipped with two binary relations +
   - a + b = b + a
 - (R, *) is a monoid with identity element 1:
   - (a * b) * c = a * (b * c)
-  - 1 `times a = a * 1 = a
+  - 1 * a = a * 1 = a
 - Multiplication left and right distributes over addition
   - a * (b + c) = (a * b) + (a * c)
   - (a + b) * c = (a * c) + (b * c)
