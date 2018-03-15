@@ -9,7 +9,6 @@ module Data.Semiring
 import           Control.Applicative (Applicative(..), Const(..))
 import           Data.Bool (Bool(..), (||), (&&))
 import           Data.Int (Int, Int8, Int16, Int32, Int64)
---import           Data.Ord (Ordering)
 import           Data.Maybe
 import           Data.Monoid
 import           Data.Word (Word, Word8, Word16, Word32, Word64)
@@ -160,17 +159,17 @@ instance Semiring Int64 where
   times = (P.*)
   one   = 1
 
-instance Semiring Double where
-  plus  = (P.+)
-  zero  = 0
-  times = (P.*)
-  one   = 1
+--instance Semiring Double where
+--  plus  = (P.+)
+--  zero  = 0
+--  times = (P.*)
+--  one   = 1
 
-instance Semiring Float where
-  plus  = (P.+)
-  zero  = 0
-  times = (P.*)
-  one   = 1
+--instance Semiring Float where
+--  plus  = (P.+)
+--  zero  = 0
+--  times = (P.*)
+--  one   = 1
 
 instance Semiring Word where
   plus  = (P.+)
@@ -202,15 +201,15 @@ instance Semiring Word64 where
   times = (P.*)
   one   = 1
 
-instance Semiring a => Semiring (Maybe a) where
-  zero = Just zero
-  one  = Just one
-  Nothing `plus` m = m
-  m `plus` Nothing = m
-  Just m1 `plus` Just m2 = Just (m1 `plus` m2)
-  Nothing `times` _ = Nothing
-  _ `times` Nothing = Nothing
-  Just m1 `times` Just m2 = Just (m1 `times` m2)
+--instance Semiring a => Semiring (Maybe a) where
+--  zero = Just zero
+--  one  = Just one
+--  Nothing `plus` m = m
+--  m `plus` Nothing = m
+--  Just m1 `plus` Just m2 = Just (m1 `plus` m2)
+--  Nothing `times` _ = Nothing
+--  _ `times` Nothing = Nothing
+--  Just m1 `times` Just m2 = Just (m1 `times` m2)
 
 instance Semiring a => Semiring (IO a) where
   zero  = pure zero
@@ -224,11 +223,13 @@ instance Semiring a => Semiring (Dual a) where
   one = Dual one
   Dual x `times` Dual y = Dual (y `times` x)
 
-instance Semiring a => Semiring (Endo a) where
-  zero = Endo (\_ -> zero)
-  plus (Endo f) (Endo g) = Endo (f `plus` g)
-  one = Endo (\_ -> one)
-  times (Endo f) (Endo g) = Endo (f `times` g)
+deriving instance Semiring a => Semiring (Endo a)
+
+--instance Semiring a => Semiring (Endo a) where
+--  zero = Endo (\_ -> zero)
+--  plus (Endo f) (Endo g) = Endo (f `plus` g)
+--  one = Endo (\_ -> one)
+--  times (Endo f) (Endo g) = Endo (f `times` g)
 
 --instance Semiring All where
 --instance Semiring Any where
